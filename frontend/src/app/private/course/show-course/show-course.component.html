@@ -1,0 +1,39 @@
+<div class="col-12 d-inline-flex justify-content-center" width="200%">
+    <div class="card m-5 w-100">
+        <div class="card-header bg-danger text-light">{{cursoData.nombre}}</div>
+            <div *ngFor="let clase of clasesList">
+                <div *ngIf="cursoData.id == clase.id_curso">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-inline-flex justify-content-center">
+                            <div class="col-12 d-inline-flex justify-content-center" *ngIf="userType == profesor">
+                                <div class="col-8 m-3">
+                                    <a class="text-dark" style="text-decoration: none" routerLink="../../class/show/{{clase.id}}/{{cursoData.id}}">{{clase.nombre}}</a>
+                                </div>
+                                <div class="col-4 m-2">
+                                    <a class="btn btn-outline-danger" style="text-decoration: none" routerLink="../../class/update/{{clase.id}}/{{clase.id}}">Editar Clase</a>
+                                </div>
+                            </div>
+                            <div *ngIf="userType != profesor">
+                                <div class="col-12 m-3">
+                                    <a class="text-dark" style="text-decoration: none">{{clase.nombre}}</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        <hr>
+        <div *ngIf="userType != profesor">
+            <a class="btn btn-outline-danger w-100" routerLink="../../class/show/{{clasesId}}/{{cursoData.id}}" (click)="matriculaAlumno()">Iniciar Curso</a>
+        </div>
+        <div class="col-12 d-inline-flex justify-content-center" *ngIf="userType == profesor">
+            <hr>
+            <div class="col-6 m-2 p-2">
+                <a class="btn btn-outline-danger w-100" style="text-decoration: none" routerLink="../../class/store/{{cursoData.id}}/">Añadir Clase</a>
+            </div>
+            <div class="col-6 m-2 p-2">
+                <a class="btn btn-outline-danger w-100" style="text-decoration: none" routerLink="../../course/update/{{cursoData.id}}">Editar Curso</a>
+            </div>
+        </div>
+    </div>
+</div>

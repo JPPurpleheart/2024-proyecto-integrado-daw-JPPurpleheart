@@ -1,0 +1,72 @@
+<div *ngIf="userType == 'alumno'">
+    <div class="card text-center">
+        <div class="card-header bg-danger text-light">
+            Datos del {{userType}}
+        </div>
+        <div class="card-body">
+            <div ngbDropdown class="dropdown">
+                <button ngbDropdownToggle class="btn btn-outline-danger" type="button" style="font-size: xx-large;" id="profile" aria-expanded="false">
+                    <h5 class="card-title">@{{userData.username}}</h5>
+                </button>
+                <ul ngbDropdownMenu aria-labelledby="profile">
+                  <li><p class="text-dark">{{email}}</p></li>
+                  <li><p class="btn btn-danger" (click)="deleteUser($event)">Eliminar Usuario</p></li>
+                </ul>
+            </div>
+            <p class="card-text">{{userData.name}}</p>
+        </div>
+        <div class="card-footer text-body-secondary">
+            <p class="card-title">Cursos Matriculados</p>
+            <table class="table">
+                <thead class=" bg-danger text-light">
+                    <tr>
+                    <th scope="col">Curso</th>
+                    <th scope="col">Itinerario</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let curso of userData.cursos.slice(1)">
+                        <td>{{curso.nombre_curso}}</td>
+                        <td>{{curso.nombre_itinerario}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div *ngIf="userType == 'profesor'">
+    <div class="card text-center">
+        <div class="card-header bg-danger text-light">
+            Datos del {{userType}}
+        </div>
+        <div class="card-body">
+            <div ngbDropdown class="dropdown">
+                <button ngbDropdownToggle class="btn btn-outline-danger" type="button" style="font-size: xx-large;" id="profile" aria-expanded="false">
+                    <h5 class="card-title">@{{userData.username}}</h5>
+                </button>
+                <ul ngbDropdownMenu aria-labelledby="profile">
+                  <li><a class="text-dark" href="{{info_profesor}}">Más Información</a></li>
+                  <li><p class="btn btn-danger" (click)="deleteUser($event)">Eliminar Usuario</p></li>
+                </ul>
+            </div>
+            <p class="card-text">{{userData.name}}</p>
+        </div>
+        <div class="card-footer text-body-secondary">
+            <p class="card-title">Cursos Impartidos</p>
+            <table class="table">
+                <thead class=" bg-danger text-light">
+                    <tr>
+                    <th scope="col">Curso</th>
+                    <th scope="col">Itinerario</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let curso of userData.cursos.slice(1)">
+                        <td>{{curso.nombre_curso}}</td>
+                        <td>{{curso.nombre_itinerario}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

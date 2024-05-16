@@ -1,0 +1,32 @@
+<div class="col-12 d-block">
+  <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+    <div class="container-fluid m-2">
+      <div class="navbar m-2" style="font-size: xx-large; justify-content: start;">
+        <a class="navbar-brand" routerLink="index"><img src="../../../assets/LOGO.png" alt="Logo M28 - On Board" width="75vh" height="75vw"></a>
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item m-2">
+            <a class="nav-link text-light" aria-current="page" routerLink="index">Inicio</a>
+          </li>
+          <li class="nav-item m-2">
+            <a class="nav-link text-light" routerLink="pathway" *ngIf="loggedIn">Cursos</a>
+          </li>
+          <li class="nav-item m-2">
+            <a class="nav-link text-light" routerLink="info">Información</a>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <a class="btn btn-outline-danger" style="font-size: xx-large;" routerLink="login" *ngIf="!loggedIn">Inicia Sesión</a>
+        <div ngbDropdown class="dropdown d-flex" *ngIf="loggedIn">
+          <button ngbDropdownToggle class="btn btn-outline-danger" type="button" style="font-size: xx-large;" id="profile" aria-expanded="false">
+        {{ username }}
+        </button>
+          <ul ngbDropdownMenu aria-labelledby="profile">
+            <li><a class="dropdown-item" href="#" (click)="logout($event)">Cierra Sesión</a></li>
+            <li><a class="dropdown-item" routerLink="profile">Ir al Perfil</a></li>
+          </ul>
+        </div>        
+      </div>
+    </div>
+  </nav>
+</div>

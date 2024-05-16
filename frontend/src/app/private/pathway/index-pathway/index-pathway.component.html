@@ -1,0 +1,25 @@
+<div class="col-12 d-inline-flex justify-content-center">
+    <div class="card m-5 mw-100" *ngFor="let itinerario of itinerariosList">
+        <div>
+            <div *ngIf="userType == profesor">
+                <div class="card-header bg-danger text-light"><a style="text-decoration: none; color: white;" [routerLink]="['/pathway/', itinerario.id]">{{itinerario.nombre}}</a></div>
+            </div>
+            <div *ngIf="userType != profesor">
+                <div class="card-header bg-danger text-light">{{itinerario.nombre}}</div>
+            </div>
+            <div *ngFor="let curso of cursosList">
+                <div *ngIf="itinerario.id == curso.itinerario">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">{{curso.nombre}}</li>
+                    </ul>
+                </div>
+            </div><hr>
+            <div width="col-12 d-inline-flex justify-content-center" *ngIf="userType != profesor">
+                <a class="btn btn-outline-danger m-3 mw-100" style="text-decoration: none; width: 90%;" routerLink="{{itinerario.id}}">Iniciar Itinerario</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-12 d-inline-flex justify-content-center" *ngIf="userType == profesor">
+    <a class="btn btn-outline-danger m-3 w-75" style="text-decoration: none" routerLink="../pathway/store/0">Añadir Itinerario</a>
+</div>

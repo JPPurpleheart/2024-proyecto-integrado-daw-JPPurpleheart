@@ -1,0 +1,27 @@
+<div class="col-12 d-inline-flex justify-content-center">
+    <div class="card m-5 w-75">
+        <div class="card-header bg-dark text-light">Añadir Clase</div>
+        <div class="card-body">
+            <form #classForm="ngForm" (ngSubmit)="addClass()">
+                <div class="mb-3">
+                    <label for="nombre" class="form-label">Nombre de la Clase</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre"
+                        placeholder="Introduce el nombre de tu clase" [(ngModel)]="form.nombre" required>
+                </div>
+                <div class="mb-3">
+                    <label for="ruta_acceso" class="form-label">Ruta de acceso de la Clase</label>
+                    <input type="text" class="form-control" id="ruta_acceso" name="ruta_acceso"
+                        placeholder="Introduce la ruta de acceso a tu clase" [ngbTooltip]="default_errors_front.error_ruta_acceso" [(ngModel)]="form.ruta_acceso" required>
+                </div>
+                <!-- <div class="mb-3">
+                    <label for="curso" class="form-label">Curso de la Clase</label>
+                    <select class="form-select" id="curso" name="curso" [(ngModel)]="form.id_curso" required>
+                        <option selected>Selecciona un Curso...</option>
+                        <option *ngFor="let curso of cursoList" [ngValue]="curso.id">{{curso.nombre}}</option>
+                    </select>
+                </div> -->
+                <button type="submit" class="btn btn-danger w-100">Añadir Clase</button>
+            </form>
+        </div>
+    </div>
+</div>

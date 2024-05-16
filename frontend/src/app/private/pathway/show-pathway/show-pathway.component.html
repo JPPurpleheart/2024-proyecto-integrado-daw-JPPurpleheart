@@ -1,0 +1,24 @@
+<div class="col-12 d-inline-flex justify-content-center" width="200%">
+    <div class="card m-5 w-100">
+        <div class="card-header bg-danger text-light">{{itinerarioData.nombre}}</div>
+        <div *ngFor="let curso of cursosList">
+            <div *ngIf="itinerarioData.id == curso.itinerario">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <div class="col-12 d-inline-flex justify-content-center">
+                            <a class="text-dark" style="text-decoration: none" routerLink="../../course/{{curso.id}}">{{curso.nombre}}</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    <div class="col-12 d-inline-flex justify-content-center" *ngIf="userType == profesor">
+        <hr>
+        <div class="col-6 m-2 p-2">
+            <a class="btn btn-outline-danger w-100" style="text-decoration: none" routerLink="../../course/store/{{itinerarioData.id}}">Añadir Curso</a>
+        </div>
+        <div class="col-6 m-2 p-2">
+            <a class="btn btn-outline-danger w-100" style="text-decoration: none" routerLink="../../pathway/update/{{itinerarioData.id}}">Editar Itinerario</a>
+        </div>
+    </div>
+</div>

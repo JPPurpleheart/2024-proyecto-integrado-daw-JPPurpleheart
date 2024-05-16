@@ -1,0 +1,33 @@
+<div class="col-12 d-inline-flex justify-content-center">
+    <div class="card m-5 w-75">
+        <div class="card-header bg-dark text-light">Añadir Curso</div>
+        <div class="card-body">
+            <form #courseForm="ngForm" (ngSubmit)="addCourse()">
+                <div class="mb-3">
+                    <label for="nombre" class="form-label">Nombre del Curso</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre"
+                        placeholder="Introduce el nombre de tu curso" [(ngModel)]="form.nombre" required>
+                </div>
+                <!-- <div class="mb-3">
+                    <label for="profesor" class="form-label">Profesor del Curso</label>
+                    <select class="form-select" id="profesor" name="profesor" [(ngModel)]="form.profesor" required>
+                        <option selected>Selecciona un Profesor...</option>
+                        <option *ngFor="let profesor of profesorList" [ngValue]="profesor.id">
+                            <ul *ngFor="let usuario of usuarioList">
+                                <li *ngIf="usuario.id==profesor.id">{{usuario.name}}</li>
+                            </ul>
+                        </option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="itinerario" class="form-label">Itinerario del Curso</label>
+                    <select class="form-select" id="itinerario" name="itinerario" [(ngModel)]="form.itinerario" required>
+                        <option selected>Selecciona un Itinerario...</option>
+                        <option *ngFor="let itinerario of itinerarioList" [ngValue]="itinerario.id">{{itinerario.nombre}}</option>
+                    </select>
+                </div> -->
+                <button type="submit" class="btn btn-danger w-100">Añadir Curso</button>
+            </form>
+        </div>
+    </div>
+</div>

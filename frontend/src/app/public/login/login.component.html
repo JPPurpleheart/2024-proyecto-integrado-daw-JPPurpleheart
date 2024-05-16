@@ -1,0 +1,26 @@
+<div class="col-12 bg-light text-dark d-inline-flex justify-content-center mw-100">
+    <div class="col-8">
+      <div class="card bg-light m-5">
+        <div class="card-header bg-danger text-light">Inicia Sesión</div>
+        <div class="card-body">
+            <form #loginForm="ngForm" (ngSubmit)="submitLogin()">
+                <div class="alert alert-danger" [hidden]="!error">
+                  {{error}}
+                </div>
+                <div class="mb-3">
+                  <label for="username" class="form-label">Nombre de Usuario</label>
+                  <input type="email" class="form-control" id="username" name="username" [(ngModel)]="form.username" required>
+                </div>
+                <div class="mb-3">
+                  <label for="password" class="form-label">Contraseña</label>
+                  <input type="password" class="form-control" id="password" name="password" [(ngModel)]="form.password" required>
+                </div>
+                <div class="col-12 mw-100 d-inline-flex justify-content-center mb-3">
+                  <button type="submit" class="btn btn-danger w-100 m-3" [disabled]="!loginForm.valid">Iniciar Sesión</button>
+                  <a class="btn btn-danger w-100 text-light m-3" routerLink="../signup">Registrarse</a>
+                </div>
+            </form>
+        </div>
+      </div>
+    </div>
+</div>

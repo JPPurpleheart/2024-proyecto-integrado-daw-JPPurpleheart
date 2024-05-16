@@ -1,0 +1,32 @@
+<div class="col-12">
+    <div class="col-12" >
+        <div class="card m-5 mw-100">
+            <div class="card-img-top">
+                <iframe class="e2e-iframe-untrusted-src mw-100" width="100%" height="567px" [src]="videoUrl" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+            <div class="card-body mw-100 d-inline-flex justify-content-center">
+                <h5 class="card-title m-1">{{clasesData.nombre}}</h5>
+            </div>
+        </div>
+    </div>
+    <div class="card m-5 mw-100">
+        <div class="card-header bg-danger text-light">{{cursoData.nombre}}</div>
+        <div *ngFor="let clase of clasesList">
+            <div *ngFor="let matricula of matriculasList">
+                <div *ngIf="cursoId == clase.id_curso">
+                    <ul class="list-group list-group-flush">
+                        <div *ngIf="matricula.comp_clase == 1 && matricula.id_clase == clase.id">
+                            <li class="list-group-item"><a class="text-success" style="text-decoration: none; font-weight: bold;" href="../../class/show/{{clase.id}}/{{clase.id_curso}}">{{clase.nombre}}</a></li>
+                        </div>
+                        <div *ngIf="matricula.comp_clase == 0 && matricula.id_clase == clase.id">
+                            <li class="list-group-item"><a class="text-danger" style="text-decoration: none" href="" (click)="onClickedNextClass(clase.id_curso, clase.id, $event)">{{clase.nombre}}</a></li>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 d-inline-flex justify-content-center btn btn-success">
+            <a class="mw-100 text-white" style="text-decoration: none; font-weight: bolder;" (click)="onClickedFinishCourse(cursoId)">Finalizar Curso</a>
+        </div>
+    </div>
+</div>
