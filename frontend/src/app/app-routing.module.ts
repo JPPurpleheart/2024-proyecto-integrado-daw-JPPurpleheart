@@ -21,6 +21,9 @@ import { ShowClassComponent } from './private/class/show-class/show-class.compon
 import { StoreClassComponent } from './private/class/store-class/store-class.component';
 import { EditClassComponent } from './private/class/edit-class/edit-class.component';
 import { CompleteCourseComponent } from './private/course/complete-course/complete-course.component';
+import { SolveExamComponent } from './private/exam/solve-exam/solve-exam.component';
+import { StoreExamComponent } from './private/exam/store-exam/store-exam.component';
+import { EditExamComponent } from './private/exam/edit-exam/edit-exam.component';
 
 const routes: Routes = [
   //Enrutado lógica del Usuario
@@ -106,6 +109,21 @@ const routes: Routes = [
   {
     path: 'complete-course/:id_course',
     component: CompleteCourseComponent,
+    canActivate: [AfterLoginService]
+  },
+  {
+    path: 'exam/show/:id_course',
+    component: SolveExamComponent,
+    canActivate: [AfterLoginService]
+  },
+  {
+    path: 'exam/store/:id_course',
+    component: StoreExamComponent,
+    canActivate: [AfterLoginService]
+  },
+  {
+    path: 'exam/update/:id_course',
+    component: EditExamComponent,
     canActivate: [AfterLoginService]
   }
 ];

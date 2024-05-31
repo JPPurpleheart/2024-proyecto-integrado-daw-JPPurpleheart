@@ -5,8 +5,6 @@ import { MatriculaService } from 'src/app/core/services/usuarios/matricula.servi
 import { ActivatedRoute, Router } from '@angular/router';
 import {DomSanitizer} from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
-import { Observable, forkJoin } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-show-class',
@@ -39,8 +37,8 @@ export class ShowClassComponent implements OnInit, OnChanges {
     this.claseId = Number(this.route.snapshot.paramMap.get('id_class'));
     this.cursoId = Number(this.route.snapshot.paramMap.get('id_course'));
     this.getClase();
-    this.getCurso(this.cursoId);
     this.getClases();
+    this.getCurso(this.cursoId);
     this.getMatriculas();
     this.getMatriculaToUpdate();
   }
@@ -105,7 +103,7 @@ export class ShowClassComponent implements OnInit, OnChanges {
           this.idNextClass = clasesData.id;
           console.log(this.idNextClass);
           this.matriculaService.update(this.matriculasToUpdate[0].id, matriculaUpdate).subscribe((data: any) => {
-            this.router.navigateByUrl("/class/show/"+this.idNextClass+"/"+idCurso);  
+            this.router.navigateByUrl("/class/show/"+this.idNextClass+"/"+idCurso);
           });
         });
       }
@@ -119,4 +117,3 @@ export class ShowClassComponent implements OnInit, OnChanges {
   }
 
 }
-
