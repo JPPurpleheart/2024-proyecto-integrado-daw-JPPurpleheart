@@ -30,7 +30,6 @@ import { EditClassComponent } from './private/class/edit-class/edit-class.compon
 import { StoreClassComponent } from './private/class/store-class/store-class.component';
 import { CompleteCourseComponent } from './private/course/complete-course/complete-course.component';
 import { StoreExamComponent } from './private/exam/store-exam/store-exam.component';
-import { EditExamComponent } from './private/exam/edit-exam/edit-exam.component';
 import { SolveExamComponent } from './private/exam/solve-exam/solve-exam.component';
 
 @NgModule({
@@ -54,7 +53,6 @@ import { SolveExamComponent } from './private/exam/solve-exam/solve-exam.compone
     StoreClassComponent,
     CompleteCourseComponent,
     StoreExamComponent,
-    EditExamComponent,
     SolveExamComponent
   ],
   imports: [

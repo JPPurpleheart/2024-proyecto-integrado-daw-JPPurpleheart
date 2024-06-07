@@ -56,17 +56,20 @@ export class ShowClassComponent implements OnInit, OnChanges {
       this.videoUrl =
           this.sanitizer.bypassSecurityTrustResourceUrl(dangerousVideoUrl);
     });
+    console.log(this.clasesData);
   }
 
   getClases() {
     this.claseService.index().subscribe(data =>{
       this.clasesList = data;
+      console.log(this.clasesList);
     });
   }
 
   getMatriculas() {
     this.matriculaService.index().subscribe(data =>{
       this.matriculasList = data;
+      console.log(this.matriculasList);
     });
   }
 
@@ -74,6 +77,7 @@ export class ShowClassComponent implements OnInit, OnChanges {
     this.cursosService.show(id).subscribe(data => {
       this.cursoData.id = data.id;
       this.cursoData.nombre = data.nombre;
+      console.log(this.cursoData);
     });
   }
 
@@ -99,12 +103,18 @@ export class ShowClassComponent implements OnInit, OnChanges {
         };
         console.log(this.matriculasToUpdate[0].id);
         console.log(matriculaUpdate);
-        this.claseService.findByCourse(idCurso, idClase).subscribe(clasesData => {
-          this.idNextClass = clasesData.id;
-          console.log(this.idNextClass);
-          this.matriculaService.update(this.matriculasToUpdate[0].id, matriculaUpdate).subscribe((data: any) => {
-            this.router.navigateByUrl("/class/show/"+this.idNextClass+"/"+idCurso);
-          });
+        this.claseService.findByCourse(idCurso, idClase).subscribe((clasesData) => {
+          if(clasesData) {
+            this.idNextClass = clasesData.id;
+            console.log(this.idNextClass);
+            this.matriculaService.update(this.matriculasToUpdate[0].id, matriculaUpdate).subscribe((data: any) => {
+              this.router.navigateByUrl("/class/show/"+this.idNextClass+"/"+idCurso);
+            });
+          } else {
+            this.matriculaService.update(this.matriculasToUpdate[0].id, matriculaUpdate).subscribe((data: any) => {
+              this.router.navigateByUrl("/class/show/"+idClase+"/"+idCurso);
+            });
+          }
         });
       }
     } catch (error) {
@@ -113,7 +123,7 @@ export class ShowClassComponent implements OnInit, OnChanges {
   }
   
   onClickedFinishCourse(idCurso: number) {
-    // return this.documentoService.completeCurso(idCurso);
+    this.router.navigateByUrl("/exam/show/"+idCurso);
   }
 
 }

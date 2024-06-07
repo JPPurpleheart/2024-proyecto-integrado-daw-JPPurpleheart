@@ -42,8 +42,8 @@ export class StoreClassComponent implements OnInit {
       id_curso: this.id_curso
     };
     return this.claseService.store(formData).subscribe(data => {
-      // this.router.navigateByUrl('/exam/store/' + this.id_curso);
-      this.router.navigateByUrl('/course/' + this.id_curso);
+      this.router.navigateByUrl('/exam/store/' + this.id_curso);
+      // this.router.navigateByUrl('/course/' + this.id_curso);
     });
   }
 

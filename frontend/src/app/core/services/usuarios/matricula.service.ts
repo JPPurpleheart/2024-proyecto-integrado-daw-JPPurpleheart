@@ -27,6 +27,12 @@ export class MatriculaService {
     return this.http.get(this.apiURL+'findByCourse/'+idCurso+'/'+id);
   }
 
+  findEnrollmentByCourse(idCurso: number): Observable <any> {
+    return this.http.get(this.apiURL + '/findEnrollmentByCourse/' + idCurso);
+  }
+
+  
+
   update(id: any, data: any): Observable <any>{
     return this.http.put(this.apiURL+"update/"+id, data);
   }

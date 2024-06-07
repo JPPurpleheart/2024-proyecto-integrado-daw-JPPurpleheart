@@ -23,7 +23,6 @@ import { EditClassComponent } from './private/class/edit-class/edit-class.compon
 import { CompleteCourseComponent } from './private/course/complete-course/complete-course.component';
 import { SolveExamComponent } from './private/exam/solve-exam/solve-exam.component';
 import { StoreExamComponent } from './private/exam/store-exam/store-exam.component';
-import { EditExamComponent } from './private/exam/edit-exam/edit-exam.component';
 
 const routes: Routes = [
   //Enrutado lógica del Usuario
@@ -119,11 +118,6 @@ const routes: Routes = [
   {
     path: 'exam/store/:id_course',
     component: StoreExamComponent,
-    canActivate: [AfterLoginService]
-  },
-  {
-    path: 'exam/update/:id_course',
-    component: EditExamComponent,
     canActivate: [AfterLoginService]
   }
 ];
