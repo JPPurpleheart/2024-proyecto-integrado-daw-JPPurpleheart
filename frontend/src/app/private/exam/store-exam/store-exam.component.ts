@@ -16,6 +16,7 @@ export class StoreExamComponent implements OnInit {
   default_errors_front: any = {
     error_opcion_correcta: 'Introduce solo a, b, c o d para elegir cual es la opción correcta'
   };
+  preguntaCounter = 0;
 
   constructor(public examenService: ExamenService, private fb: FormBuilder, private route: ActivatedRoute, private router: Router) {
     this.form = this.fb.group({
@@ -33,22 +34,30 @@ export class StoreExamComponent implements OnInit {
   }
 
   addExam() {
+    const pregunta = this?.form?.get('pregunta')?.value;
+    const opcion_a = this?.form?.get('opcion_a')?.value;
+    const opcion_b = this?.form?.get('opcion_b')?.value;
+    const opcion_c = this?.form?.get('opcion_c')?.value;
+    const opcion_d = this?.form?.get('opcion_d')?.value;
+    const opcion_correcta = this?.form?.get('opcion_correcta')?.value;
     let formData = {
       id_curso: this.id_curso,
-      pregunta:'',
-      opcion_a: '',
-      opcion_b: '',
-      opcion_c: '',
-      opcion_d: '',
-      opcion_correcta: ''
+      pregunta: pregunta,
+      opcion_a: opcion_a,
+      opcion_b: opcion_b,
+      opcion_c: opcion_c,
+      opcion_d: opcion_d,
+      opcion_correcta: opcion_correcta
     };
-    for (let i = 0; i < 5; i++) {
-      this.examenService.store(formData).subscribe(data => {
-        console.log("Pregunta añadida");
+    this.examenService.store(formData).subscribe(data => {
+      console.log("Pregunta añadida");
+      this.preguntaCounter ++;
+      if (this.preguntaCounter === 5) {
+        this.router.navigateByUrl('/course/' + this.id_curso);
+      } else {
         this.router.navigateByUrl('/exam/store/' + this.id_curso);
-      });     
-    }
-    this.router.navigateByUrl('/course/' + this.id_curso);
+      }
+    });
   }
 
   getErrorMessage(controlName: string): string {

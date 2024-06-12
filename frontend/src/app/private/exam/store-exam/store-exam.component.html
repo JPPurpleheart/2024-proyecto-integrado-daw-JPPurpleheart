@@ -6,32 +6,32 @@
                 <div class="form-group mb-3">
                     <label for="pregunta" class="form-label">Pregunta a Añadir</label>
                     <input type="text" class="form-control" id="pregunta" name="pregunta"
-                        placeholder="Introduce la pregunta que quieres" formControlName="form.pregunta" required>
+                        placeholder="Introduce la pregunta que quieres" formControlName="pregunta" required>
                 </div>
                 <div class="form-group mb-3">
                     <label for="opcion_a" class="form-label">Opcion A</label>
                     <input type="text" class="form-control" id="opcion_a" name="opcion_a"
-                        placeholder="Introduce la primera respuesta posible"  formControlName="form.opcion_a" required>
+                        placeholder="Introduce la primera respuesta posible"  formControlName="opcion_a" required>
                 </div>
                 <div class="form-group mb-3">
                     <label for="opcion_b" class="form-label">Opcion B</label>
                     <input type="text" class="form-control" id="opcion_b" name="opcion_b"
-                        placeholder="Introduce la segunda respuesta posible"  formControlName="form.opcion_b" required>
+                        placeholder="Introduce la segunda respuesta posible"  formControlName="opcion_b" required>
                 </div>
                 <div class="form-group mb-3">
                     <label for="opcion_c" class="form-label">Opcion C</label>
                     <input type="text" class="form-control" id="opcion_c" name="opcion_c"
-                        placeholder="Introduce la tercera respuesta posible"  formControlName="form.opcion_c" required>
+                        placeholder="Introduce la tercera respuesta posible"  formControlName="opcion_c" required>
                 </div>
                 <div class="form-group mb-3">
                     <label for="opcion_d" class="form-label">Opcion D</label>
                     <input type="text" class="form-control" id="opcion_d" name="opcion_d"
-                        placeholder="Introduce la cuarta respuesta posible"  formControlName="form.opcion_d" required>
+                        placeholder="Introduce la cuarta respuesta posible"  formControlName="opcion_d" required>
                 </div>
                 <div class="form-group mb-3">
                     <label for="opcion_correcta" class="form-label">Opcion Correcta</label>
                     <input type="text" class="form-control" id="opcion_correcta" name="opcion_correcta"
-                        placeholder="Introduce la respuesta correcta" [ngbTooltip]="default_errors_front.error_opcion_correcta"  formControlName="form.opcion_correcta" required>
+                        placeholder="Introduce la respuesta correcta" [ngbTooltip]="default_errors_front.error_opcion_correcta"  formControlName="opcion_correcta" required>
                         <div class="alert alert-danger" role="alert" *ngIf="form?.get('opcion_correcta')?.invalid && (form?.get('opcion_correcta')?.touched || form?.get('opcion_correcta')?.dirty)">{{ getErrorMessage('opcion_correcta') }}</div>
                 </div>
                 <button type="submit" class="btn btn-danger w-100">Añadir Clase</button>

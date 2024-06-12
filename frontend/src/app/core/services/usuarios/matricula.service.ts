@@ -28,7 +28,7 @@ export class MatriculaService {
   }
 
   findEnrollmentByCourse(idCurso: number): Observable <any> {
-    return this.http.get(this.apiURL + '/findEnrollmentByCourse/' + idCurso);
+    return this.http.get(this.apiURL + 'findEnrollmentByCourse/' + idCurso);
   }
 
   

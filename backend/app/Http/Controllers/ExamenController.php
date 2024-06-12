@@ -50,6 +50,18 @@ class ExamenController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  int  $id_curso
+     * @return \Illuminate\Http\Response
+     */
+    public function findQuestionsByCourse($id_curso)
+    {
+        return Examen::select('id', 'pregunta', 'opcion_a', 'opcion_b', 'opcion_c', 'opcion_d', 'opcion_correcta')
+            ->where('id_curso', '=', $id_curso)->get();
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id

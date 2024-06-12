@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class ExamenService {
 
-  private apiURL = "http://127.0.0.1:8000/api/examens/";
+  private apiURL = "http://127.0.0.1:8000/api/examenes/";
 
   constructor(private http: HttpClient) { }
 
@@ -17,6 +17,10 @@ export class ExamenService {
 
   show(id: any): Observable <any>{
     return this.http.get(this.apiURL+id);
+  }
+
+  findQuestionsByCourse(idCurso: number): Observable <any> {
+    return this.http.get(this.apiURL + 'findQuestionsByCourse/' + idCurso);
   }
 
   store(data: any): Observable <any>{

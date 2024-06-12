@@ -13,7 +13,8 @@ import { MatriculaService } from 'src/app/core/services/usuarios/matricula.servi
 export class SolveExamComponent implements OnInit {
   
   questions: any[] = [
-    { 
+    {
+      id: 0, 
       pregunta: '',
       opcion_a: '',
       opcion_b: '',
@@ -23,7 +24,12 @@ export class SolveExamComponent implements OnInit {
     },
   ];
   idCurso: number = 0;
-  studentAnswers: string[] = new Array(this.questions.length).fill('');
+  studentAnswers: any[] = [
+    {
+      questionId: 0,
+      answer: '',
+    }
+  ];
   matriculaData: any = [];
   
   constructor(public cursosService: CursoService, public examenService: ExamenService, public matriculaService: MatriculaService, private route: ActivatedRoute, private router: Router, private http: HttpClient) { }
@@ -35,13 +41,18 @@ export class SolveExamComponent implements OnInit {
   }
 
   getQuestions(idCurso: number) {
-    this.examenService.show(idCurso).subscribe(data => {
-      this.questions = data.slice(); // Make a copy of the data array
-  
-      for (let i = 9; i > 0; i--) {
+    this.examenService.findQuestionsByCourse(idCurso).subscribe(data => {
+      const questions = data.slice(); // Make a copy of the data array
+
+      // Shuffle the questions using Fisher-Yates shuffle
+      for (let i = questions.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [this.questions[i], this.questions[j]] = [this.questions[j], this.questions[i]];
+        [questions[i], questions[j]] = [questions[j], questions[i]];
       }
+
+      // Get the first 10 shuffled questions
+      this.questions = questions.slice(0, 10);
+      console.log(this.questions);
     });
   }
 
@@ -52,14 +63,23 @@ export class SolveExamComponent implements OnInit {
   }
 
   updateAnswer(questionIndex: number, answer: string) {
-    this.studentAnswers[questionIndex] = answer;
+    const studentAnswer = {
+      questionId: this.questions[questionIndex].id, // Assuming 'id' property in question object
+      answer: answer,
+    };
+    this.studentAnswers[questionIndex] = studentAnswer;
+    console.log(this.studentAnswers);
   }
 
   calculateScore() {
     let correctAnswers = 0;
-    this.studentAnswers.forEach((answer, index) => {
-      if (answer === this.questions[index].correctAnswer) {
+    this.studentAnswers.forEach((answer) => {
+      const matchingQuestion = this.questions.find(
+        (question) => question.id === answer.questionId
+      );
+      if (matchingQuestion && answer.answer === matchingQuestion.opcion_correcta) {
         correctAnswers++;
+        console.log(correctAnswers);
       }
     });
     this.completeCourse(correctAnswers);
@@ -77,7 +97,7 @@ export class SolveExamComponent implements OnInit {
         id_curso: matricula.id_curso,
         id_clase: matricula.id_clase,
         comp_curso: 1,
-        comp_clase: this.matriculaData.comp_clase,
+        comp_clase: matricula.comp_clase,
       };
       this.matriculaService.update(idMatricula, matriculaToUpdate).subscribe(data => {
         this.router.navigateByUrl("/complete-course/"+this.idCurso);

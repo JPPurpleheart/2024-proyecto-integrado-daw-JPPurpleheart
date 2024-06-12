@@ -1,29 +1,30 @@
 <div *ngFor="let question of questions; let i = index">
-  <h3>{{ question.question }}</h3>
+  <h3>{{ question.pregunta }}</h3>
   <ul>
     <li>
       <label>
         <input type="radio" [name]="'question' + i" [value]="'a'" (change)="updateAnswer(i, 'a')">
-        {{ question.option_a }}
+        {{ question.opcion_a }}
       </label>
     </li>
     <li>
       <label>
         <input type="radio" [name]="'question' + i" [value]="'b'" (change)="updateAnswer(i, 'b')">
-        {{ question.option_b }}
+        {{ question.opcion_b }}
       </label>
     </li>
     <li>
       <label>
         <input type="radio" [name]="'question' + i" [value]="'c'" (change)="updateAnswer(i, 'c')">
-        {{ question.option_c }}
+        {{ question.opcion_c }}
       </label>
     </li>
     <li>
       <label>
         <input type="radio" [name]="'question' + i" [value]="'d'" (change)="updateAnswer(i, 'd')">
-        {{ question.option_d }}
+        {{ question.opcion_d }}
       </label>
     </li>
   </ul>
 </div>
+<button class="btn btn-danger w-100" (click)="calculateScore()">Finalizar Examen</button>
