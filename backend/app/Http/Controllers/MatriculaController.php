@@ -72,7 +72,7 @@ class MatriculaController extends Controller
      */
     public function findEnrollmentByCourse($id_curso)
     {
-        return Matricula::select('id_alumno', 'id_curso', 'id_clase', 'comp_curso', 'comp_clase')
+        return Matricula::select('id', 'id_alumno', 'id_curso', 'id_clase', 'comp_curso', 'comp_clase')
             ->where('id_curso', '=', $id_curso)->get();
     }
 

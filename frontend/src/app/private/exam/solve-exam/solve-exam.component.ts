@@ -84,24 +84,21 @@ export class SolveExamComponent implements OnInit {
     });
     this.completeCourse(correctAnswers);
   }
-
+  
   completeCourse(correctAnswers: number) {
     if (correctAnswers < 6) {
       this.router.navigateByUrl("/course/"+this.idCurso);
     } else {
       for (let matricula of this.matriculaData) {
-        let idMatricula = matricula.id;
-        let matriculaToUpdate = {
-        id: matricula.id,
-        id_alumno: matricula.id_alumno,
-        id_curso: matricula.id_curso,
-        id_clase: matricula.id_clase,
-        comp_curso: 1,
-        comp_clase: matricula.comp_clase,
-      };
-      this.matriculaService.update(idMatricula, matriculaToUpdate).subscribe(data => {
-        this.router.navigateByUrl("/complete-course/"+this.idCurso);
-      });
+        if (matricula.id_curso === this.idCurso) { // Check for matching course
+          matricula.comp_curso = 1; // Update comp_curso directly
+          this.matriculaService.update(matricula.id, matricula).subscribe(data => {
+            this.router.navigateByUrl("/complete-course/"+this.idCurso);
+          }, error => {
+            console.error("Error updating enrollment:", error); // Handle update error
+          });
+          break; // Exit loop after updating the matching enrollment
+        }
       }
     }
   }
