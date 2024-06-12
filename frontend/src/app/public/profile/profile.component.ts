@@ -6,6 +6,7 @@ import { ProfesorService } from 'src/app/core/services/usuarios/profesor.service
 import { CursoService } from 'src/app/core/services/cursos/curso.service';
 import { ItinerarioService } from 'src/app/core/services/cursos/itinerario.service';
 import { Router } from '@angular/router';
+import { MatriculaService } from 'src/app/core/services/usuarios/matricula.service';
 
 @Component({
   selector: 'app-profile',
@@ -31,7 +32,7 @@ export class ProfileComponent implements OnInit {
   email: any = "";
   info_profesor: any = "";
 
-  constructor(public afterLoginService: AfterLoginService, public usuarioService: UsuarioService, public alumnoService: AlumnoService, public profesorService: ProfesorService, public cursoService: CursoService, public itinerarioService: ItinerarioService, private router: Router) { }
+  constructor(public afterLoginService: AfterLoginService, public usuarioService: UsuarioService, public alumnoService: AlumnoService, public profesorService: ProfesorService, public cursoService: CursoService, public itinerarioService: ItinerarioService, public matriculaService: MatriculaService, private router: Router) { }
 
   ngOnInit(): void {
     this.userType = this.afterLoginService.getLoggedInUserType();
@@ -76,6 +77,34 @@ export class ProfileComponent implements OnInit {
       this.alumnoService.show(userId).subscribe(data => {
         this.email = data.email;
       });
+      this.matriculaService.find(userId).subscribe(matriculas => {
+        matriculas.forEach((matricula: {id_curso: any}) => {
+          this.cursoService.index().subscribe((data: any) => {
+            data.forEach((item: {
+              itinerario: any; id: number; nombre: any; 
+          }) => {
+              if (matricula.id_curso == item.id) {
+                this.userData.cursos.push({
+                  id: item.itinerario,
+                  nombre_curso: item.nombre,
+                  nombre_itinerario: ''
+                });
+                for (let i = 0; i < this.userData.cursos.length; i++) {
+                  const curso = this.userData.cursos[i];
+                  this.itinerarioService.show(curso.id).subscribe(data => {
+                    for (let j = 0; j < this.userData.cursos.length; j++) {
+                      const userCurso = this.userData.cursos[j];
+                      if (userCurso.nombre_curso === curso.nombre_curso) {
+                        userCurso.nombre_itinerario = data.nombre;
+                      }
+                    }
+                  });
+                }
+              }
+            });
+          });}
+        )
+      })
     }
   }
 

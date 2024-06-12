@@ -23,6 +23,10 @@ export class MatriculaService {
     return this.http.post<any>(this.apiURL+"create", data);
   }
 
+  find(idUser: number): Observable <any> {
+    return this.http.get(this.apiURL + 'find/' + idUser);
+  }
+
   findByCourse(idCurso: any, id: any): Observable <any>{
     return this.http.get(this.apiURL+'findByCourse/'+idCurso+'/'+id);
   }

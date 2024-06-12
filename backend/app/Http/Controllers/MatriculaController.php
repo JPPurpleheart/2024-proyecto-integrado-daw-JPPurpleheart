@@ -52,6 +52,18 @@ class MatriculaController extends Controller
     /**
      * Display the specified resource.
      *
+     * @param  int  $id_alumno
+     * @return \Illuminate\Http\Response
+     */
+    public function find($id_alumno)
+    {
+        return Matricula::select('id', 'id_alumno', 'id_curso', 'id_clase', 'comp_curso', 'comp_clase')
+            ->where('id_alumno', '=', $id_alumno)->get();
+    }
+
+    /**
+     * Display the specified resource.
+     *
      * @param  int  $id_curso
      * @param  int  $id_clase
      * @return \Illuminate\Http\Response

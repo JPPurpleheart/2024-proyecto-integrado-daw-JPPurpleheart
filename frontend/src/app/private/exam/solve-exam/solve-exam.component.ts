@@ -90,16 +90,16 @@ export class SolveExamComponent implements OnInit {
       this.router.navigateByUrl("/course/"+this.idCurso);
     } else {
       for (let matricula of this.matriculaData) {
-        if (matricula.id_curso === this.idCurso) { // Check for matching course
-          matricula.comp_curso = 1; // Update comp_curso directly
+        if (matricula.id_curso === this.idCurso) {
+          matricula.comp_curso = 1;
           this.matriculaService.update(matricula.id, matricula).subscribe(data => {
-            this.router.navigateByUrl("/complete-course/"+this.idCurso);
+            console.log(data);
           }, error => {
-            console.error("Error updating enrollment:", error); // Handle update error
+            console.error("Error updating enrollment:", error);
           });
-          break; // Exit loop after updating the matching enrollment
         }
       }
+      this.router.navigateByUrl("/complete-course/"+this.idCurso);
     }
   }
 

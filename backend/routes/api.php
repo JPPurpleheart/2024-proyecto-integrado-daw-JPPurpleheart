@@ -88,8 +88,9 @@ Route::delete('/examenes/delete/{id}', [ExamenController::class, 'destroy']);
 
 Route::get('/matriculas', [MatriculaController::class, 'index']);
 Route::get('/matriculas/{id}', [MatriculaController::class, 'show']);
+Route::get('/matriculas/find/{id_alumno}', [MatriculaController::class, 'find']);
 Route::get('/matriculas/findByCourse/{id_curso}/{id_clase}', [MatriculaController::class, 'findByCourse']);
-Route::get('/matriculas/findEnrollmentByCourse/{id}', [MatriculaController::class, 'findEnrollmentByCourse']);
+Route::get('/matriculas/findEnrollmentByCourse/{id_curso}', [MatriculaController::class, 'findEnrollmentByCourse']);
 Route::post('/matriculas/create', [MatriculaController::class, 'store']);
 Route::put('/matriculas/update/{id}', [MatriculaController::class, 'update']);
 Route::delete('/matriculas/delete/{id}', [MatriculaController::class, 'destroy']);
