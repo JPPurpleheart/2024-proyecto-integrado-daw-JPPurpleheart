@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AfterLoginService } from './core/services/login/after-login.service';
-import { BeforeLoginService } from './core/services/login/before-login.service';
+import { AfterLoginGuard } from './core/services/login/after-login.service';
 //Imports lógica del Usuario
 import { LoginComponent } from './public/login/login.component';
 import { SignupComponent } from './public/signup/signup.component';
@@ -29,17 +28,14 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
-    canActivate: [BeforeLoginService]
   },
   {
     path: 'signup',
     component: SignupComponent,
-    canActivate: [BeforeLoginService]
   },
   {
     path: 'profile',
     component: ProfileComponent,
-    canActivate: [AfterLoginService]
   },
   //Enrutado vistas públicas de la aplicación
   {
@@ -58,67 +54,54 @@ const routes: Routes = [
   {
     path: 'pathway',
     component: IndexPathwayComponent,
-    canActivate: [AfterLoginService]
   },
   {
     path: 'pathway/::id_pathway',
     component: ShowPathwayComponent,
-    canActivate: [AfterLoginService]
   },
   {
     path: 'pathway/store/:id_pathway',
     component: StorePathwayComponent,
-    canActivate: [AfterLoginService]
   },
   {
     path: 'pathway/update/::id_pathway',
     component: EditPathwayComponent,
-    canActivate: [AfterLoginService]
   },
   {
     path: 'course/:id_course',
     component: ShowCourseComponent,
-    canActivate: [AfterLoginService]
   },
   {
     path: 'course/store/:id_pathway',
     component: StoreCourseComponent,
-    canActivate: [AfterLoginService]
   },
   {
     path: 'course/update/:id',
     component: EditCourseComponent,
-    canActivate: [AfterLoginService]
   },
   {
     path: 'class/show/:id_class/:id_course',
     component: ShowClassComponent,
-    canActivate: [AfterLoginService]
   },
   {
     path: 'class/store/:id_course',
     component: StoreClassComponent,
-    canActivate: [AfterLoginService]
   },
   {
     path: 'class/update/:id_class/:id_course',
     component: EditClassComponent,
-    canActivate: [AfterLoginService]
   },
   {
     path: 'complete-course/:id_course',
     component: CompleteCourseComponent,
-    canActivate: [AfterLoginService]
   },
   {
     path: 'exam/show/:id_course',
     component: SolveExamComponent,
-    canActivate: [AfterLoginService]
   },
   {
     path: 'exam/store/:id_course',
     component: StoreExamComponent,
-    canActivate: [AfterLoginService]
   }
 ];
 

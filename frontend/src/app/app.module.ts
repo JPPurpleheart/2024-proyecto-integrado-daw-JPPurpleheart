@@ -12,8 +12,7 @@ import { ProfileComponent } from './public/profile/profile.component';
 import { APIConnectionsService } from './core/services/login/apiconnections.service';
 import { AuthHandlerService } from './core/services/login/auth-handler.service';
 import { TokenHandlerService } from './core/services/login/token-handler.service';
-import { AfterLoginService } from './core/services/login/after-login.service';
-import { BeforeLoginService } from './core/services/login/before-login.service';
+import { AfterLoginGuard } from './core/services/login/after-login.service';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { IndexComponent } from './public/index/index.component';
@@ -68,8 +67,7 @@ import { SolveExamComponent } from './private/exam/solve-exam/solve-exam.compone
     APIConnectionsService,
     AuthHandlerService,
     TokenHandlerService,
-    AfterLoginService,
-    BeforeLoginService
+    AfterLoginGuard
   ],
   bootstrap: [AppComponent]
 })

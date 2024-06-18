@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AfterLoginService } from 'src/app/core/services/login/after-login.service';
+import { AuthHandlerService } from 'src/app/core/services/login/auth-handler.service';
 import { UsuarioService } from 'src/app/core/services/usuarios/usuario.service';
 import { AlumnoService } from 'src/app/core/services/usuarios/alumno.service';
 import { ProfesorService } from 'src/app/core/services/usuarios/profesor.service';
@@ -28,15 +28,24 @@ export class ProfileComponent implements OnInit {
         nombre_itinerario: ''
       }
     ]
+  };
+  cursos: any = {
+    id: 0,
+    nombre_curso: '',
+    nombre_itinerario: '',
+    alumnosEnrolled: [],
   }
   email: any = "";
   info_profesor: any = "";
 
-  constructor(public afterLoginService: AfterLoginService, public usuarioService: UsuarioService, public alumnoService: AlumnoService, public profesorService: ProfesorService, public cursoService: CursoService, public itinerarioService: ItinerarioService, public matriculaService: MatriculaService, private router: Router) { }
+  constructor(public authhandler: AuthHandlerService, public usuarioService: UsuarioService, public alumnoService: AlumnoService, public profesorService: ProfesorService, public cursoService: CursoService, public itinerarioService: ItinerarioService, public matriculaService: MatriculaService, private router: Router) { }
 
   ngOnInit(): void {
-    this.userType = this.afterLoginService.getLoggedInUserType();
-    this.userId = this.afterLoginService.getLoggedInUserId();
+    this.userType = this.authhandler.getLoggedInUserType();
+    if (this.userType !== 'profesor' && this.userType !== 'alumno') {
+      this.router.navigateByUrl('login'); // Redirect to login
+    }
+    this.userId = this.authhandler.getLoggedInUserId();
     this.getData(this.userId, this.userType);
   }
 
@@ -73,6 +82,38 @@ export class ProfileComponent implements OnInit {
           }
         });
       });
+      // 1. Find all courses created by the professor
+      this.cursoService.findCursosByProfesor(userId).subscribe((cursos: any[]) => {
+        this.cursos = []; // Initialize empty cursos array
+        cursos.forEach((curso: { itinerario: any; profesor: number; nombre: any }) => {
+          this.cursos.push({
+            id: curso.itinerario,
+            nombre_curso: curso.nombre,
+            nombre_itinerario: '',
+            alumnosEnrolled: [], // Array to store enrolled students
+          });
+        });
+
+      // 2. Find enrolled students for each course (separate loop)
+      this.cursos.forEach((curso: { id: number; alumnosEnrolled: any[] }) => {
+        this.matriculaService.findEnrollmentByCourse(curso.id).subscribe(matriculas => {
+          matriculas.forEach((matricula: { id_alumno: any }) => {
+            // 3. Find user data for each enrolled student
+            this.usuarioService.show(matricula.id_alumno).subscribe(alumnoData => {
+              const existingStudent = curso.alumnosEnrolled.find(
+                (student: { nombreAlumno: string }) => student.nombreAlumno === alumnoData.name
+              );
+              if (!existingStudent) {
+                curso.alumnosEnrolled.push({
+                  nombreAlumno: alumnoData.name,
+                  usernameAlumno: alumnoData.username,
+                });
+              }
+            });
+          });
+        });
+      });
+    });
     } else {
       this.alumnoService.show(userId).subscribe(data => {
         this.email = data.email;

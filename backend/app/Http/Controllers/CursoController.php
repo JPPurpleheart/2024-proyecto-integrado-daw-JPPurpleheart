@@ -50,6 +50,18 @@ class CursoController extends Controller
     }
     
     /**
+     * Display the specified resource.
+     *
+     * @param  int  $profesor
+     * @return \Illuminate\Http\Response
+     */
+    public function findCursosByProfesor($profesor)
+    {
+        return Curso::select('id', 'nombre', 'itinerario')
+            ->where('profesor', '=', $profesor)->get();
+    }
+    
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id

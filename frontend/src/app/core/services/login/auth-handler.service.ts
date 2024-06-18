@@ -8,16 +8,21 @@ import { Observable } from 'rxjs';
 })
 export class AuthHandlerService {
 
-  private loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.tokenHandler.isValid());
-  
-  getAuthStatus(): Observable<boolean> {
-    return this.loggedIn.asObservable();
-  }
+  private loggedInSubject = new BehaviorSubject<boolean>(false);
+  loggedIn$ = this.loggedInSubject.asObservable(); // Public observable for login state
+
+  private loggedInUserId: number = 0;
+  private loggedInUserType: string = "";
 
   constructor(private tokenHandler: TokenHandlerService) { }
 
-  setAuthStatus(value: boolean): void {
-    this.loggedIn.next(value);
+  isLoggedIn() {
+    // Consider checking token validity here (using TokenHandlerService)
+    return this.loggedInSubject.getValue();
+  }
+
+  setLoggedIn(loggedIn: boolean) {
+    this.loggedInSubject.next(loggedIn); // Emit event on login/logout
   }
 
   private username: string = "";
@@ -28,6 +33,42 @@ export class AuthHandlerService {
 
   getUsername(): string {
     return this.username;
+  }
+
+  setLoggedInUser(id: number, userType: string) {
+    this.loggedInUserId = id;
+    this.loggedInUserType = userType;
+  }
+
+  getLoggedInUserId(): number {
+    let result:number = 0;
+    const LocalStorageSearch = localStorage.getItem('userId');
+    if(LocalStorageSearch) {
+      result = JSON.parse(LocalStorageSearch).id;
+    } else {
+      result = this.loggedInUserId;
+    }
+    return result;
+  }
+
+  getLoggedInUserType(): string {
+    let result:string = "";
+    const LocalStorageSearch = localStorage.getItem('userId');
+    if(LocalStorageSearch) {
+      result = JSON.parse(LocalStorageSearch).userType;
+    } else {
+      result = this.loggedInUserType;
+    }
+    return result;
+  }
+
+  removeLoggedInUser() {
+    this.loggedInUserId = 0;
+    this.loggedInUserType = "";
+  }
+
+  removeLoggedIn() {
+    return localStorage.removeItem('userId');
   }
 
 }

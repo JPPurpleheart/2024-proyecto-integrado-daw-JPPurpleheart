@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { ExamenService } from 'src/app/core/services/cursos/examen.service';
+import { AuthHandlerService } from 'src/app/core/services/login/auth-handler.service';
 
 @Component({
   selector: 'app-store-exam',
@@ -18,7 +19,7 @@ export class StoreExamComponent implements OnInit {
   };
   preguntaCounter = 0;
 
-  constructor(public examenService: ExamenService, private fb: FormBuilder, private route: ActivatedRoute, private router: Router) {
+  constructor(public examenService: ExamenService, private fb: FormBuilder, private route: ActivatedRoute, private router: Router, public authHandler: AuthHandlerService) {
     this.form = this.fb.group({
       pregunta:['', [Validators.required]],
       opcion_a: ['', [Validators.required]],
@@ -28,8 +29,12 @@ export class StoreExamComponent implements OnInit {
       opcion_correcta: ['', [Validators.required, Validators.pattern(new RegExp('^[a|b|c|d]$'))]]
     })
   }
-
+  
   ngOnInit(): void {
+    const userType = this.authHandler.getLoggedInUserType();
+    if (userType !== 'profesor' && userType !== 'alumno') {
+      this.router.navigateByUrl('login'); // Redirect to login
+    }
     this.id_curso = this.route.snapshot.paramMap.get('id_course');
   }
 

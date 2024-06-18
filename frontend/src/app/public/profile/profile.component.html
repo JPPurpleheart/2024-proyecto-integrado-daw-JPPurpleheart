@@ -13,21 +13,21 @@
                   <li><p class="btn btn-danger" (click)="deleteUser($event)">Eliminar Usuario</p></li>
                 </ul>
             </div>
-            <p class="card-text">{{userData.name}}</p>
+            <p class="card-text text-light">{{userData.name}}</p>
         </div>
         <div class="card-footer text-body-secondary">
-            <p class="card-title">Cursos Matriculados</p>
+            <p class="card-title text-light">Cursos Matriculados</p>
             <table class="table">
-                <thead class=" bg-danger text-light">
+                <thead class="text-light">
                     <tr>
-                    <th scope="col">Curso</th>
-                    <th scope="col">Itinerario</th>
+                    <th class="text-light" scope="col">Curso</th>
+                    <th class="text-light" scope="col">Itinerario</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let curso of userData.cursos.slice(1)">
-                        <td>{{curso.nombre_curso}}</td>
-                        <td>{{curso.nombre_itinerario}}</td>
+                        <td class="text-light">{{curso.nombre_curso}}</td>
+                        <td class="text-light">{{curso.nombre_itinerario}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -49,24 +49,37 @@
                   <li><p class="btn btn-danger" (click)="deleteUser($event)">Eliminar Usuario</p></li>
                 </ul>
             </div>
-            <p class="card-text">{{userData.name}}</p>
+            <p class="card-text text-light">{{userData.name}}</p>
         </div>
         <div class="card-footer text-body-secondary">
-            <p class="card-title">Cursos Impartidos</p>
+            <p class="card-title text-light">Cursos Impartidos</p>
             <table class="table">
-                <thead class=" bg-danger text-light">
+                <thead class="text-light">
                     <tr>
-                    <th scope="col">Curso</th>
-                    <th scope="col">Itinerario</th>
+                    <th class="text-light" scope="col">Curso</th>
+                    <th class="text-light" scope="col">Itinerario</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let curso of userData.cursos.slice(1)">
-                        <td>{{curso.nombre_curso}}</td>
-                        <td>{{curso.nombre_itinerario}}</td>
+                        <td class="text-light">{{curso.nombre_curso}}</td>
+                        <td class="text-light">{{curso.nombre_itinerario}}</td>
                     </tr>
                 </tbody>
             </table>
+        </div>
+        <div class="card-footer text-body-secondary">
+            <p class="card-title text-light">Alumnos Matriculados</p>
+            <ul *ngFor="let curso of cursos" class="list-group list-group-flush">
+                <li class="list-group text-light" style="text-decoration: none;">
+                    {{curso.nombre_curso}}
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group text-light" *ngFor="let alumno of curso.alumnosEnrolled" style="text-decoration: none;">
+                            {{alumno.nombreAlumno}}
+                        </li>
+                    </ul>
+                </li>
+            </ul>
         </div>
     </div>
 </div>

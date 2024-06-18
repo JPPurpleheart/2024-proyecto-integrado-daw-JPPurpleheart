@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CursoService } from 'src/app/core/services/cursos/curso.service';
 import { ExamenService } from 'src/app/core/services/cursos/examen.service';
+import { AuthHandlerService } from 'src/app/core/services/login/auth-handler.service';
 import { MatriculaService } from 'src/app/core/services/usuarios/matricula.service';
 
 @Component({
@@ -32,9 +33,13 @@ export class SolveExamComponent implements OnInit {
   ];
   matriculaData: any = [];
   
-  constructor(public cursosService: CursoService, public examenService: ExamenService, public matriculaService: MatriculaService, private route: ActivatedRoute, private router: Router, private http: HttpClient) { }
+  constructor(public cursosService: CursoService, public examenService: ExamenService, public matriculaService: MatriculaService, private route: ActivatedRoute, private router: Router, private http: HttpClient, public authHandler: AuthHandlerService) { }
 
   ngOnInit(): void {
+    const userType = this.authHandler.getLoggedInUserType();
+    if (userType !== 'profesor' && userType !== 'alumno') {
+      this.router.navigateByUrl('login'); // Redirect to login
+    }
     this.idCurso = Number(this.route.snapshot.paramMap.get('id_course'));
     this.getQuestions(this.idCurso);
     this.getMatricula(this.idCurso);
@@ -87,6 +92,7 @@ export class SolveExamComponent implements OnInit {
   
   completeCourse(correctAnswers: number) {
     if (correctAnswers < 6) {
+      window.alert('No has aprobado el examen; vuelve a intentarlo');
       this.router.navigateByUrl("/course/"+this.idCurso);
     } else {
       for (let matricula of this.matriculaData) {

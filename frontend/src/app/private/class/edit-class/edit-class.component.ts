@@ -3,6 +3,7 @@ import { ClaseService } from 'src/app/core/services/cursos/clase.service';
 import { CursoService } from 'src/app/core/services/cursos/curso.service';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
+import { AuthHandlerService } from 'src/app/core/services/login/auth-handler.service';
 
 @Component({
   selector: 'app-edit-class',
@@ -28,9 +29,13 @@ export class EditClassComponent implements OnInit {
   };
   ruta_acceso = this.form.ruta_acceso.split('https://www.youtube.com/watch?v=')[1];
 
-  constructor(public cursosService: CursoService, public claseService: ClaseService, private route: ActivatedRoute, private router: Router) { }
+  constructor(public cursosService: CursoService, public claseService: ClaseService, private route: ActivatedRoute, private router: Router, public authHandler: AuthHandlerService) { }
 
   ngOnInit(): void {
+    const userType = this.authHandler.getLoggedInUserType();
+    if (userType !== 'profesor' && userType !== 'alumno') {
+      this.router.navigateByUrl('login'); // Redirect to login
+    }
     this.id = Number(this.route.snapshot.paramMap.get('id_class'));
     this.getClase();
     this.getCurso();

@@ -19,6 +19,10 @@ export class CursoService {
     return this.http.get(this.apiURL+id);
   }
 
+  findCursosByProfesor(id: any): Observable <any>{
+    return this.http.get(this.apiURL+"findCursosByProfesor/"+id);
+  }
+
   store(data: any): Observable <any>{
     return this.http.post<any>(this.apiURL+"create", data);
   }

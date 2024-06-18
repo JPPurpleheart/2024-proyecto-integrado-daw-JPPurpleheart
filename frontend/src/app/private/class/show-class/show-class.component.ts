@@ -5,6 +5,7 @@ import { MatriculaService } from 'src/app/core/services/usuarios/matricula.servi
 import { ActivatedRoute, Router } from '@angular/router';
 import {DomSanitizer} from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
+import { AuthHandlerService } from 'src/app/core/services/login/auth-handler.service';
 
 @Component({
   selector: 'app-show-class',
@@ -12,7 +13,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./show-class.component.css']
 })
 
-export class ShowClassComponent implements OnInit, OnChanges {
+export class ShowClassComponent implements OnInit {
 
   cursoData:any = {
     id: '',
@@ -31,20 +32,20 @@ export class ShowClassComponent implements OnInit, OnChanges {
   claseId: number = 0;
   idNextClass: any = 0;
 
-  constructor(public cursosService: CursoService, public claseService: ClaseService, public matriculaService: MatriculaService, private route: ActivatedRoute, private sanitizer: DomSanitizer, private router: Router, private http: HttpClient) { }
+  constructor(public cursosService: CursoService, public claseService: ClaseService, public matriculaService: MatriculaService, private route: ActivatedRoute, private sanitizer: DomSanitizer, private router: Router, private http: HttpClient, public authHandler: AuthHandlerService) { }
 
   ngOnInit(): void {
+    const userType = this.authHandler.getLoggedInUserType();
+    if (userType !== 'profesor' && userType !== 'alumno') {
+      this.router.navigateByUrl('login'); // Redirect to login
+    }
     this.claseId = Number(this.route.snapshot.paramMap.get('id_class'));
     this.cursoId = Number(this.route.snapshot.paramMap.get('id_course'));
-    this.getClase();
-    this.getClases();
     this.getCurso(this.cursoId);
     this.getMatriculas();
     this.getMatriculaToUpdate();
-  }
-
-  ngOnChanges() {
     this.getClase();
+    this.getClases();
   }
 
   getClase() {
@@ -87,8 +88,7 @@ export class ShowClassComponent implements OnInit, OnChanges {
     });
   }
 
-  onClickedNextClass(idCurso: number, idClase: number, event: any) {
-    event.preventDefault();
+  onClickedNextClass(idCurso: number, idClase: number) {
     try {      
       if (!this.matriculasToUpdate) {
         throw new Error('Datos de matrícula no encontrados');
@@ -123,7 +123,26 @@ export class ShowClassComponent implements OnInit, OnChanges {
   }
   
   onClickedFinishCourse(idCurso: number) {
-    this.router.navigateByUrl("/exam/show/"+idCurso);
+    this.matriculaService.findEnrollmentByCourse(idCurso).subscribe(cursos => {
+      let allClassesCompleted = true; // Flag to track completion status
+  
+      for (let curso of cursos) {
+        // Check if any class has comp_class set to 0
+        if (curso.comp_clase !== 1) {
+          allClassesCompleted = false;
+          break; // Exit loop if a class is not completed (comp_class !== 1)
+        }
+      }
+  
+      if (allClassesCompleted) {
+        // All classes completed, navigate to exam
+        this.router.navigateByUrl("/exam/show/" + idCurso);
+      } else {
+        // Block navigation, display message (optional)
+        window.alert("¡No todas las clases completadas para este curso!");
+        // You can also display a message to the user, e.g., using a toast notification
+      }
+    });
   }
 
 }

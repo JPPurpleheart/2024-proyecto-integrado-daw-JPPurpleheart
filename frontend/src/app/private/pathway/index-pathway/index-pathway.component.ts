@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ItinerarioService } from 'src/app/core/services/cursos/itinerario.service';
 import { CursoService } from 'src/app/core/services/cursos/curso.service';
-import { ActivatedRoute } from '@angular/router';
-import { AfterLoginService } from 'src/app/core/services/login/after-login.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthHandlerService } from 'src/app/core/services/login/auth-handler.service';
 
 @Component({
   selector: 'app-index-pathway',
@@ -17,13 +17,17 @@ export class IndexPathwayComponent implements OnInit {
   userId:number = 0;
   profesor:any = "profesor";
 
-  constructor(public itinerarioService: ItinerarioService, public cursoService: CursoService, public route: ActivatedRoute, public afterLoginService: AfterLoginService) { }
+  constructor(public itinerarioService: ItinerarioService, public cursoService: CursoService, public route: ActivatedRoute, public router: Router, public authHandler: AuthHandlerService) { }
 
   ngOnInit(): void {
+    const userType = this.authHandler.getLoggedInUserType();
+    if (userType !== 'profesor' && userType !== 'alumno') {
+      this.router.navigateByUrl('login'); // Redirect to login
+    }
     this.getItinerarios();
     this.getCursos();
-    this.userType = this.afterLoginService.getLoggedInUserType();
-    this.userId = this.afterLoginService.getLoggedInUserId();
+    this.userType = this.authHandler.getLoggedInUserType();
+    this.userId = this.authHandler.getLoggedInUserId();
   }
 
   getItinerarios() {

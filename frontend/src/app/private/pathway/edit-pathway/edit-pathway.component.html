@@ -1,9 +1,9 @@
 <div class="col-12 d-inline-flex justify-content-center">
     <div class="card m-5 w-75">
-        <div class="card-header bg-dark text-light">Editar Itinerario</div>
+        <div class="card-header bg-danger text-light">Editar Itinerario</div>
         <div class="card-body">
             <form #pathwayForm="ngForm" (ngSubmit)="submitPathway()">
-                <div class="mb-3">
+                <div class="mb-3 text-light">
                     <label for="nombre" class="form-label">Nombre del Itinerario</label>
                     <input type="text" class="form-control" name="nombre" id="nombre"
                         placeholder="{{itinerariosList.nombre}}" [(ngModel)]="form.nombre" required>

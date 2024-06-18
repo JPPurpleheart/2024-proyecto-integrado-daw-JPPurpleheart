@@ -7,8 +7,11 @@
           <li class="nav-item m-2">
             <a class="nav-link text-light" aria-current="page" routerLink="index">Inicio</a>
           </li>
-          <li class="nav-item m-2">
-            <a class="nav-link text-light" routerLink="pathway" *ngIf="loggedIn">Cursos</a>
+          <li class="nav-item m-2" *ngIf="userType === 'alumno'">
+            <a class="nav-link text-light" routerLink="pathway">Cursos</a>
+          </li>
+          <li class="nav-item m-2" *ngIf="userType === 'profesor'">
+            <a class="nav-link text-light" routerLink="pathway">Curso</a>
           </li>
           <li class="nav-item m-2">
             <a class="nav-link text-light" routerLink="info">Información</a>
@@ -16,16 +19,25 @@
         </ul>
       </div>
       <div>
-        <a class="btn btn-outline-danger" style="font-size: xx-large;" routerLink="login" *ngIf="!loggedIn">Inicia Sesión</a>
-        <div ngbDropdown class="dropdown d-flex" *ngIf="loggedIn">
+        <a class="btn btn-outline-danger" style="font-size: xx-large;" routerLink="login" *ngIf="!loggedIn && userType === ''">Inicia Sesión</a>
+        <div ngbDropdown class="dropdown d-flex"  *ngIf="userType === 'profesor'">
           <button ngbDropdownToggle class="btn btn-outline-danger" type="button" style="font-size: xx-large;" id="profile" aria-expanded="false">
-        {{ username }}
-        </button>
+            {{ username }}
+          </button>
           <ul ngbDropdownMenu aria-labelledby="profile">
             <li><a class="dropdown-item" href="#" (click)="logout($event)">Cierra Sesión</a></li>
             <li><a class="dropdown-item" routerLink="profile">Ir al Perfil</a></li>
           </ul>
-        </div>        
+        </div>
+        <div ngbDropdown class="dropdown d-flex"  *ngIf="userType === 'alumno'">
+          <button ngbDropdownToggle class="btn btn-outline-danger" type="button" style="font-size: xx-large;" id="profile" aria-expanded="false">
+            {{ username }}
+          </button>
+          <ul ngbDropdownMenu aria-labelledby="profile">
+            <li><a class="dropdown-item" href="#" (click)="logout($event)">Cierra Sesión</a></li>
+            <li><a class="dropdown-item" routerLink="profile">Ir al Perfil</a></li>
+          </ul>
+        </div>
       </div>
     </div>
   </nav>

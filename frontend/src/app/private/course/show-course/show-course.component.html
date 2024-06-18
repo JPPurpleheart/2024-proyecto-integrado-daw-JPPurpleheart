@@ -1,3 +1,6 @@
+<div class="col-12 d-inline-flex justify-content-center">
+    <a class="btn btn-outline-danger" style="text-decoration: none" routerLink="../../pathway/{{cursoData.itinerario}}">Detalle del Itinerario</a>
+</div>
 <div class="col-12 d-inline-flex justify-content-center" width="200%">
     <div class="card m-5 w-100">
         <div class="card-header bg-danger text-light">{{cursoData.nombre}}</div>
@@ -7,7 +10,7 @@
                         <li class="list-group-item d-inline-flex justify-content-center">
                             <div class="col-12 d-inline-flex justify-content-center" *ngIf="userType == profesor">
                                 <div class="col-8 m-3">
-                                    <a class="text-dark" style="text-decoration: none" routerLink="../../class/show/{{clase.id}}/{{cursoData.id}}">{{clase.nombre}}</a>
+                                    <a class="text-light" style="text-decoration: none" routerLink="../../class/show/{{clase.id}}/{{cursoData.id}}">{{clase.nombre}}</a>
                                 </div>
                                 <div class="col-4 m-2">
                                     <a class="btn btn-outline-danger" style="text-decoration: none" routerLink="../../class/update/{{clase.id}}/{{clase.id}}">Editar Clase</a>
@@ -15,7 +18,7 @@
                             </div>
                             <div *ngIf="userType != profesor">
                                 <div class="col-12 m-3">
-                                    <a class="text-dark" style="text-decoration: none">{{clase.nombre}}</a>
+                                    <a class="text-light" style="text-decoration: none">{{clase.nombre}}</a>
                                 </div>
                             </div>
                         </li>

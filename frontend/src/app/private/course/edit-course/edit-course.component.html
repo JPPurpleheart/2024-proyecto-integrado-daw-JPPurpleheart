@@ -1,14 +1,14 @@
 <div class="col-12 d-inline-flex justify-content-center">
     <div class="card m-5 w-75">
-        <div class="card-header bg-dark text-light">Editar Curso</div>
+        <div class="card-header bg-danger text-light">Editar Curso</div>
         <div class="card-body">
             <form #courseForm="ngForm" (ngSubmit)="editCourse()">
-                <div class="mb-3">
+                <div class="mb-3 text-light">
                     <label for="nombre" class="form-label">Nombre del Curso</label>
                     <input type="text" class="form-control" id="nombre" name="nombre"
                         placeholder="{{cursoData.nombre}}" [(ngModel)]="form.nombre" required>
                 </div>
-                <div class="mb-3">
+                <div class="mb-3 text-light">
                     <label for="profesor" class="form-label">Profesor del Curso</label>
                     <select class="form-select" id="profesor" name="profesor" [(ngModel)]="form.profesor" required>
                         <option *ngFor="let profesor of profesorList" [ngValue]="profesor.id" selected>
@@ -25,7 +25,7 @@
                         </option>
                     </select>
                 </div>
-                <div class="mb-3">
+                <div class="mb-3 text-light">
                     <label for="itinerario" class="form-label">Itinerario del Curso</label>
                     <select class="form-select" id="itinerario" name="itinerario" [(ngModel)]="form.itinerario" required>
                         <option *ngFor="let itinerario of itinerarioList" [ngValue]="itinerario.id" selected>

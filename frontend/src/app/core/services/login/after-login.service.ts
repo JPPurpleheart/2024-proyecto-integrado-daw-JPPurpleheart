@@ -1,58 +1,28 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthHandlerService } from './auth-handler.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AfterLoginService implements CanActivate {
+export class AfterLoginGuard implements CanActivate {
 
-  public loggedIn: boolean = false;
-  private loggedInUserId: number = 0;
-  private loggedInUserType: string = "";
+  constructor(private authHandler: AuthHandlerService, private router: Router) { }
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Observable<boolean> {
-    this.authHandler.getAuthStatus().subscribe(
-      value => {
-        this.loggedIn = value;
-      }
-    );
-    return this.loggedIn;    
-  }
+  canActivate(
+    next: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot):
+      Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-  constructor(private authHandler: AuthHandlerService) { }
-
-  setLoggedInUser(id: number, userType: string) {
-    this.loggedInUserId = id;
-    this.loggedInUserType = userType;
-  }
-
-  getLoggedInUserId(): number {
-    let result:number = 0;
-    const LocalStorageSearch = localStorage.getItem('userId');
-    if(LocalStorageSearch) {
-      result = JSON.parse(LocalStorageSearch).id;
-    } else {
-      result = this.loggedInUserId;
+    if (!this.authHandler.isLoggedIn()) { // Use service method here
+      window.alert('No estás auntenticado para entrar aquí; inicia sesión o registrate.');
+      this.router.navigateByUrl('login');
+      return false; // Explicitly return false to prevent further processing
     }
-    return result;
-  }
 
-  getLoggedInUserType(): string {
-    let result:string = "";
-    const LocalStorageSearch = localStorage.getItem('userId');
-    if(LocalStorageSearch) {
-      result = JSON.parse(LocalStorageSearch).userType;
-    } else {
-      result = this.loggedInUserType;
-    }
-    return result;
-  }
-
-  removeLoggedInUser() {
-    this.loggedInUserId = 0;
-    this.loggedInUserType = "";
+    // No further action needed in the guard (success handled elsewhere)
+    return true;
   }
 
 }

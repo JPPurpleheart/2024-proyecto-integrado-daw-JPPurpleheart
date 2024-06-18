@@ -5,6 +5,7 @@ import { ItinerarioService } from 'src/app/core/services/cursos/itinerario.servi
 import { CursoService } from 'src/app/core/services/cursos/curso.service';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
+import { AuthHandlerService } from 'src/app/core/services/login/auth-handler.service';
 
 @Component({
   selector: 'app-edit-course',
@@ -28,9 +29,13 @@ export class EditCourseComponent implements OnInit {
     itinerario: ''
   };
 
-  constructor(public usuarioService: UsuarioService, public profesorService: ProfesorService, public itinerarioService: ItinerarioService, public cursoService: CursoService, private route: ActivatedRoute, private router: Router) { }
+  constructor(public usuarioService: UsuarioService, public profesorService: ProfesorService, public itinerarioService: ItinerarioService, public cursoService: CursoService, private route: ActivatedRoute, private router: Router, public authHandler: AuthHandlerService) { }
 
   ngOnInit(): void {
+    const userType = this.authHandler.getLoggedInUserType();
+    if (userType !== 'profesor' && userType !== 'alumno') {
+      this.router.navigateByUrl('login'); // Redirect to login
+    }
     this.id = Number(this.route.snapshot.paramMap.get('id'));
     this.getCurso();
     this.getProfesor();

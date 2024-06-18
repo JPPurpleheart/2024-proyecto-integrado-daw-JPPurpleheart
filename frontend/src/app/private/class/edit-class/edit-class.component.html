@@ -1,19 +1,19 @@
 <div class="col-12 d-inline-flex justify-content-center">
     <div class="card m-5 w-75">
-        <div class="card-header bg-dark text-light">Editar Clase</div>
+        <div class="card-header bg-danger text-light">Editar Clase</div>
         <div class="card-body">
             <form #classForm="ngForm" (ngSubmit)="editClass()">
-                <div class="mb-3">
+                <div class="mb-3 text-light">
                     <label for="nombre" class="form-label">Nombre de la Clase</label>
                     <input type="text" class="form-control" id="nombre" name="nombre"
                         placeholder="{{claseData.nombre}}" [(ngModel)]="form.nombre" required>
                 </div>
-                <div class="mb-3">
+                <div class="mb-3 text-light">
                     <label for="ruta_acceso" class="form-label">Ruta de acceso de la Clase</label>
                     <input type="te{{claseData.ruta_acceso}}t" class="form-control" id="ruta_acceso" name="ruta_acceso"
                         placeholder="https://www.youtube.com/watch?v={{claseData.ruta_acceso}}" [ngbTooltip]="default_errors_front.error_ruta_acceso" [(ngModel)]="form.ruta_acceso" required>
                 </div>
-                <div class="mb-3">
+                <div class="mb-3 text-light">
                     <label for="curso" class="form-label">Curso de la Clase</label>
                     <select class="form-select" id="curso" name="curso" [(ngModel)]="form.id_curso" required>
                         <option>Selecciona un Curso...</option>

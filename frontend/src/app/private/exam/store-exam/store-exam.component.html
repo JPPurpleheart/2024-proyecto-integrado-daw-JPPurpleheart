@@ -1,40 +1,40 @@
 <div class="col-12 d-inline-flex justify-content-center">
     <div class="card m-5 w-75">
-        <div class="card-header bg-danger text-light">Añadir Clase</div>
+        <div class="card-header bg-danger text-light">Añadir Preguntas</div>
         <div class="card-body">
             <form [formGroup]="form" class="needs-validation" novalidate (ngSubmit)="addExam()">
-                <div class="form-group mb-3">
+                <div class="form-group mb-3 text-light">
                     <label for="pregunta" class="form-label">Pregunta a Añadir</label>
                     <input type="text" class="form-control" id="pregunta" name="pregunta"
                         placeholder="Introduce la pregunta que quieres" formControlName="pregunta" required>
                 </div>
-                <div class="form-group mb-3">
+                <div class="form-group mb-3 text-light">
                     <label for="opcion_a" class="form-label">Opcion A</label>
                     <input type="text" class="form-control" id="opcion_a" name="opcion_a"
                         placeholder="Introduce la primera respuesta posible"  formControlName="opcion_a" required>
                 </div>
-                <div class="form-group mb-3">
+                <div class="form-group mb-3 text-light">
                     <label for="opcion_b" class="form-label">Opcion B</label>
                     <input type="text" class="form-control" id="opcion_b" name="opcion_b"
                         placeholder="Introduce la segunda respuesta posible"  formControlName="opcion_b" required>
                 </div>
-                <div class="form-group mb-3">
+                <div class="form-group mb-3 text-light">
                     <label for="opcion_c" class="form-label">Opcion C</label>
                     <input type="text" class="form-control" id="opcion_c" name="opcion_c"
                         placeholder="Introduce la tercera respuesta posible"  formControlName="opcion_c" required>
                 </div>
-                <div class="form-group mb-3">
+                <div class="form-group mb-3 text-light">
                     <label for="opcion_d" class="form-label">Opcion D</label>
                     <input type="text" class="form-control" id="opcion_d" name="opcion_d"
                         placeholder="Introduce la cuarta respuesta posible"  formControlName="opcion_d" required>
                 </div>
-                <div class="form-group mb-3">
+                <div class="form-group mb-3 text-light">
                     <label for="opcion_correcta" class="form-label">Opcion Correcta</label>
                     <input type="text" class="form-control" id="opcion_correcta" name="opcion_correcta"
                         placeholder="Introduce la respuesta correcta" [ngbTooltip]="default_errors_front.error_opcion_correcta"  formControlName="opcion_correcta" required>
                         <div class="alert alert-danger" role="alert" *ngIf="form?.get('opcion_correcta')?.invalid && (form?.get('opcion_correcta')?.touched || form?.get('opcion_correcta')?.dirty)">{{ getErrorMessage('opcion_correcta') }}</div>
                 </div>
-                <button type="submit" class="btn btn-danger w-100">Añadir Clase</button>
+                <button type="submit" class="btn btn-danger w-100">Añadir Preguntas</button>
             </form>
         </div>
     </div>

@@ -61,6 +61,7 @@ Route::delete('/profesores/delete/{id}', [ProfesorController::class, 'destroy'])
 
 Route::get('/cursos', [CursoController::class, 'index']);
 Route::get('/cursos/{id}', [CursoController::class, 'show']);
+Route::get('/cursos/findCursosByProfesor/{profesor}', [CursoController::class, 'findCursosByProfesor']);
 Route::post('/cursos/create', [CursoController::class, 'store']);
 Route::put('/cursos/update/{id}', [CursoController::class, 'update']);
 Route::delete('/cursos/delete/{id}', [CursoController::class, 'destroy']);

@@ -1,32 +1,46 @@
+<div class="col-12 d-inline-flex justify-content-center">
+    <a class="btn btn-outline-danger" style="text-decoration: none" routerLink="../../../../course/{{cursoId}}">Detalle del Curso</a>
+</div>
 <div class="col-12">
     <div class="col-12" >
-        <div class="card m-5 mw-100">
+        <div class="card m-5">
             <div class="card-img-top">
-                <iframe class="e2e-iframe-untrusted-src mw-100" width="100%" height="567px" [src]="videoUrl" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                <iframe class="e2e-iframe-untrusted-src" width="100%" height="567px" [src]="videoUrl" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             </div>
-            <div class="card-body mw-100 d-inline-flex justify-content-center">
-                <h5 class="card-title m-1">{{clasesData.nombre}}</h5>
+            <div class="card-body justify-content-center">
+                <h5 class="card-title m-1 text-light">{{clasesData.nombre}}</h5>
             </div>
         </div>
     </div>
-    <div class="card m-5 mw-100">
+    <!-- <div class="col-12" *ngFor="let clase of clasesList">
+        <div *ngFor="let matricula of matriculasList">
+            <div *ngIf="matricula.comp_clase == 0 && matricula.id_clase==clase.id && clase.id == claseId">
+                <a class="btn btn-outline-danger" style="text-decoration: none" (click)="onClickedNextClass(clase.id_curso, clase.id)">Completa Clase</a>
+                <a class="btn btn-outline-danger" style="text-decoration: none" routerLink="../../../../course/{{cursoId}}">Detalle del Curso</a>
+            </div>
+        </div>
+    </div> -->
+    <div class="card m-5">
         <div class="card-header bg-danger text-light">{{cursoData.nombre}}</div>
         <div *ngFor="let clase of clasesList">
             <div *ngFor="let matricula of matriculasList">
                 <div *ngIf="cursoId == clase.id_curso">
                     <ul class="list-group list-group-flush">
                         <div *ngIf="matricula.comp_clase == 1 && matricula.id_clase == clase.id">
-                            <li class="list-group-item"><a class="text-success" style="text-decoration: none; font-weight: bold;" href="../../class/show/{{clase.id}}/{{clase.id_curso}}">{{clase.nombre}}</a></li>
+                            <li class="list-group-item"><a class="text-success" style="text-decoration: none; font-weight: bold;" href="../../class/show/{{clase.id}}/{{cursoId}}">{{clase.nombre}}</a></li>
                         </div>
-                        <div *ngIf="matricula.comp_clase == 0 && matricula.id_clase == clase.id">
-                            <li class="list-group-item"><a class="text-danger" style="text-decoration: none" href="" (click)="onClickedNextClass(clase.id_curso, clase.id, $event)">{{clase.nombre}}</a></li>
+                        <div *ngIf="matricula.comp_clase == 0 && matricula.id_clase==clase.id && clase.id == claseId">
+                            <li class="list-group-item"><a class="text-secondary" style="text-decoration: none" (click)="onClickedNextClass(clase.id_curso, clase.id)">{{clase.nombre}}</a></li>
+                        </div>
+                        <div *ngIf="matricula.comp_clase == 0 && matricula.id_clase==clase.id && clase.id != claseId">
+                            <li class="list-group-item"><a class="text-danger" style="text-decoration: none">{{clase.nombre}}</a></li>
                         </div>
                     </ul>
                 </div>
             </div>
         </div>
-        <div class="col-12 d-inline-flex justify-content-center btn btn-success">
-            <a class="mw-100 text-white" style="text-decoration: none; font-weight: bolder;" (click)="onClickedFinishCourse(cursoId)">Finalizar Curso</a>
+        <div class="col-12 justify-content-center btn btn-success">
+            <a class="text-white" style="text-decoration: none; font-weight: bolder;" (click)="onClickedFinishCourse(cursoId)">Finalizar Curso</a>
         </div>
     </div>
 </div>

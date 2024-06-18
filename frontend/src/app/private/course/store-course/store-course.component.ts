@@ -5,7 +5,7 @@ import { ItinerarioService } from 'src/app/core/services/cursos/itinerario.servi
 import { CursoService } from 'src/app/core/services/cursos/curso.service';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
-import { AfterLoginService } from 'src/app/core/services/login/after-login.service';
+import { AuthHandlerService } from 'src/app/core/services/login/auth-handler.service';
 
 @Component({
   selector: 'app-store-course',
@@ -23,11 +23,15 @@ export class StoreCourseComponent implements OnInit {
   // profesorList:any = [];
   // itinerarioList:any = [];
 
-  constructor(public usuarioService: UsuarioService, public afterLoginService: AfterLoginService, private route: ActivatedRoute, public profesorService: ProfesorService, public itinerarioService: ItinerarioService, public cursoService: CursoService, private router: Router) { }
+  constructor(public usuarioService: UsuarioService, public authhandler: AuthHandlerService, private route: ActivatedRoute, public profesorService: ProfesorService, public itinerarioService: ItinerarioService, public cursoService: CursoService, private router: Router, public authHandler: AuthHandlerService) { }
 
   ngOnInit(): void {
+    const userType = this.authHandler.getLoggedInUserType();
+    if (userType !== 'profesor' && userType !== 'alumno') {
+      this.router.navigateByUrl('login'); // Redirect to login
+    }
     this.id_itinerario = this.route.snapshot.paramMap.get('id_pathway');
-    this.id_profesor = this.afterLoginService.getLoggedInUserId();
+    this.id_profesor = this.authhandler.getLoggedInUserId();
     // this.getUsuario();
     // this.getProfesor();
     // this.getItinerario();

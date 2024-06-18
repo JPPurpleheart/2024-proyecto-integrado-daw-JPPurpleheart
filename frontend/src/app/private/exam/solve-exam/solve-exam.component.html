@@ -4,28 +4,28 @@
   </div>
   <div class="card-body">
     <div *ngFor="let question of questions; let i = index">
-      <h3 class="card-title">{{ question.pregunta }}</h3>
+      <h3 class="card-title text-light">{{ question.pregunta }}</h3>
       <div class="form-check">
         <input class="form-check-input" type="radio" name="{{i}}" id="a" (change)="updateAnswer(i, 'a')">
-        <label class="form-check-label" for="a">
+        <label class="form-check-label text-light" for="a">
           {{ question.opcion_a }}
         </label>
       </div>
       <div class="form-check">
         <input class="form-check-input" type="radio" name="{{i}}" id="b" (change)="updateAnswer(i, 'b')">
-        <label class="form-check-label" for="b">
+        <label class="form-check-label text-light" for="b">
           {{ question.opcion_b }}
         </label>
       </div>
       <div class="form-check">
         <input class="form-check-input" type="radio" name="{{i}}" id="c" (change)="updateAnswer(i, 'c')">
-        <label class="form-check-label" for="c">
+        <label class="form-check-label text-light" for="c">
           {{ question.opcion_c }}
         </label>
       </div>
       <div class="form-check">
         <input class="form-check-input" type="radio" name="{{i}}" id="d" (change)="updateAnswer(i, 'd')">
-        <label class="form-check-label" for="d">
+        <label class="form-check-label text-light" for="d">
           {{ question.opcion_d }}
         </label>
       </div>

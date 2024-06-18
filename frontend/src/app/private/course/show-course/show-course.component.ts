@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ClaseService } from 'src/app/core/services/cursos/clase.service';
 import { CursoService } from 'src/app/core/services/cursos/curso.service';
-import { ActivatedRoute } from '@angular/router';
-import { AfterLoginService } from 'src/app/core/services/login/after-login.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthHandlerService } from 'src/app/core/services/login/auth-handler.service';
 import { MatriculaService } from 'src/app/core/services/usuarios/matricula.service';
 
 @Component({
@@ -14,7 +14,8 @@ export class ShowCourseComponent implements OnInit {
 
   cursoData:any = {
     id: '',
-    nombre: ''
+    nombre: '',
+    itinerario: ''
   };
   clasesList:any = [];
   clasesId:any = 0;
@@ -23,20 +24,25 @@ export class ShowCourseComponent implements OnInit {
   userId:Number = 0;
   profesor: any = "profesor";
 
-  constructor(public cursosService: CursoService, public matriculaService: MatriculaService, public claseService: ClaseService, public afterLoginService: AfterLoginService, private route: ActivatedRoute) { }
+  constructor(public cursosService: CursoService, public matriculaService: MatriculaService, public claseService: ClaseService, public authhandler: AuthHandlerService, private route: ActivatedRoute, public router: Router, public authHandler: AuthHandlerService) { }
 
   ngOnInit(): void {
+    const userType = this.authHandler.getLoggedInUserType();
+    if (userType !== 'profesor' && userType !== 'alumno') {
+      this.router.navigateByUrl('login'); // Redirect to login
+    }
     this.cursoId = Number(this.route.snapshot.paramMap.get('id_course'));
     this.getClases();
     this.getCursos();
-    this.userType = this.afterLoginService.getLoggedInUserType();
-    this.userId = this.afterLoginService.getLoggedInUserId();
+    this.userType = this.authhandler.getLoggedInUserType();
+    this.userId = this.authhandler.getLoggedInUserId();
   }
 
   getCursos() {
     this.cursosService.show(this.cursoId).subscribe(data => {
       this.cursoData.id = data.id;
       this.cursoData.nombre = data.nombre;
+      this.cursoData.itinerario = data.itinerario;
     });
   }
 
